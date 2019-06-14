@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Tablero Cuatro en Linea</title>
+        <style type="text/css">
+            .ui-diagram-element {   
+                width:3em; 
+                height:3em;
+                line-height:3em;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+                border-radius: 5em;
+                border: 1px solid #404a4e;
+                background-color: #404a4e;
+                color: #cccccc;
+            }
+            
+             .ui-diagram-element-grafo-blanco {   
+                width:3em; 
+                height:3em;
+                line-height:3em;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+                border-radius: 5em;
+                border: 1px solid #404a4e;
+                background-color: white;
+                color: #cccccc;
+            }
+            
+             .ui-diagram-element-grafo-azul {   
+                width:3em; 
+                height:3em;
+                line-height:3em;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+                border-radius: 5em;
+                border: 1px solid #404a4e;
+                background-color: blue;
+                color: #cccccc;
+            }
+            
+             .ui-diagram-element-grafo-rojo {   
+                width:3em; 
+                height:3em;
+                line-height:3em;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+                border-radius: 5em;
+                border: 1px solid #404a4e;
+                background-color: red;
+                color: #cccccc;
+            }
+            
+            .ui-diagram-element-grafo-verde {   
+                width:3em; 
+                height:3em;
+                line-height:3em;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+                border-radius: 5em;
+                border: 1px solid #404a4e;
+                background-color: green;
+                color: #cccccc;
+            }
+            .ui-diagram-element:hover {
+                background-color: #20282b;
+            }
+    </style>
+    </h:head>
+    <h:body>
+        <div id="top" class="top">
+            <ui:insert name="top">
+                <p:outputLabel value="#{controladorJuegoCuatroenlinea.usuario.nombre}"/>
+                <p:outputLabel value="#{controladorJuegoCuatroenlinea.usuario.color}"/>
+            </ui:insert>
+        </div>
+
+        <h:form id="frmTableroJugadores" >
+            <p:growl id="pgTableroJugadores"/>
+
+            <h:panelGroup rendered="#{!cuatroAppBean.estadoJuego}">
+                <h:outputText value="Aún no existe un juego habilitado para ud"/>
+                <br/>
+                <h:outputText id="fecha_sistema" value="#{cuatroAppBean.fechaSistema}" 
+                              style="color: red; font-size: 4em;" />
+
+                <p:poll interval="1"   update="frmTableroJugadores"  />
+
+            </h:panelGroup>
+
+            <h:panelGroup id="gpJuego" >
+                <h:panelGroup rendered="#{cuatroAppBean.estadoJuego}">
+                    <c:forEach items="#{cuatroAppBean.teclas}" var="item">
+                        <p:commandButton value="#{item}" update="frmTableroJugadores" action="#{cuatroAppBean.accion(item, controladorJuegoCuatroenlinea.usuario)}" />
+                    </c:forEach>
+                </h:panelGroup>
+
+
+                <h:panelGroup rendered="#{cuatroAppBean.estadoJuego}" id="panelTableroJugadores" layout="block" style="overflow: auto; width: 100%; height: 1000px;" >
+                    <p:diagram id="tableroJugadores" value="#{cuatroAppBean.model}" style="height:1000px" styleClass="ui-widget-content" />
+
+                </h:panelGroup>
+                <h:form>
+                    <p:commandButton value="Habilitar Juego" update="@all" ajax="false" action="#{cuatroAppBean.activarJuego()}"/>
+                    
+                </h:form>
+
+            </h:panelGroup>
+
+        </h:form>
+    </h:body>
+</html>
+
+

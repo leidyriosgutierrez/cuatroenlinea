@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUsuarioTitle}">
+            <h:form id="UsuarioEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usuarioController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_correo}" for="correo" />
+                        <p:inputText id="correo" value="#{usuarioController.selected.correo}" title="#{bundle.EditUsuarioTitle_correo}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_correo}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_contrasenia}" for="contrasenia" />
+                        <p:inputText id="contrasenia" value="#{usuarioController.selected.contrasenia}" title="#{bundle.EditUsuarioTitle_contrasenia}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_contrasenia}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_color}" for="color" />
+                        <p:inputText id="color" value="#{usuarioController.selected.color}" title="#{bundle.EditUsuarioTitle_color}" />
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{usuarioController.selected.nombre}" title="#{bundle.EditUsuarioTitle_nombre}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_apellido}" for="apellido" />
+                        <p:inputText id="apellido" value="#{usuarioController.selected.apellido}" title="#{bundle.EditUsuarioTitle_apellido}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_apellido}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_identificacion}" for="identificacion" />
+                        <p:inputText id="identificacion" value="#{usuarioController.selected.identificacion}" title="#{bundle.EditUsuarioTitle_identificacion}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_identificacion}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_edad}" for="edad" />
+                        <p:inputText id="edad" value="#{usuarioController.selected.edad}" title="#{bundle.EditUsuarioTitle_edad}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_edad}"/>
+                        <p:outputLabel value="#{bundle.EditUsuarioLabel_tipoUsuario}" for="tipoUsuario" />
+                        <p:selectOneMenu id="tipoUsuario" value="#{usuarioController.selected.tipoUsuario}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_tipoUsuario}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoUsuarioController.itemsAvailableSelectOne}"
+                                           var="tipoUsuarioItem"
+                                           itemValue="#{tipoUsuarioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioController.update}" value="#{bundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuarioEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UsuarioEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
